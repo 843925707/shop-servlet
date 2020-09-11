@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>荣民商城-首页</title>
+<link rel="short icon" href="images/copylogo.png">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/foot.css">
+<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+<div id="app">
+<div id="login_info">
+	<!-- 头部  -->
+	<div class="header_con">
+    	<div class="header">
+    		<div class="welcome fl">欢迎来到海潮商城</div>
+    		<div class="fr">
+            	<div class="login_btn fl" v-if="onlogin">
+                	<a href="user.html" target="_blank">欢迎:<em>{{loginName}}</em></a>
+                	<span> | </span>
+                	<a href="register.html" target="_blank">注册</a>
+                </div>
+                
+                <div class="login_btn fl" v-else="onlogin">
+                	<a href="login.html" target="_blank">登录</a>
+                    <span> | </span>
+                    <a href="register.html" target="_blank">注册</a>
+                </div>
+                
+            	 <div class="user_link fl">
+                    <span> | </span>
+                    <a href="front/user.html" target="_blank">用户中心</a>
+                    <span> | </span>
+                    <a href="front/cart.html" target="_blank">我的购物车</a>
+                    <span> | </span>
+                    <a href="front/order.html" target="_blank">我的订单</a>
+                 </div>  
+             </div>  
+    	</div>
+    </div> 
+    
+     <!-- 搜素框 -->
+     <div class="search_bar clearfix" id="search">
+     		<a href="index.html" class="logo fl"></a>
+     		<div class="search_con fl">
+            	<form> 		
+                    <input type="text" id="goods_search_gname" class="input_text fl" name="key_words" placeholder="搜索商品">
+                    <input type="button" onclick="goods_search()" target="_blank" class="input_btn fr"  value="搜索">
+                </form>
+            </div>
+     		<div class="guest_cart fr">
+            	<a href="front/cart.html" class="cart_name fl">我的购物车</a>
+                <div class="goods_count fl" id="show_count">{{cartCount}}</div>
+            </div>
+     </div>
+</div>
+
+    <!-- 商品分类 -->
+    <div class="navbar_con">
+    	<div class="navbar">
+    		<h1 class="fl">全商品分类</h1>
+    		<ul class="navlist fl">
+    			<li><a href="index.html">首页</a></li>
+                <li class="interval">|</li>
+                <li><a href="">手机商城</a></li>
+                <li class="interval">|</li>
+                <li><a href="">抽奖</a></li>
+    		</ul>
+    	</div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="center_con clearfix" >
+        <div class="subnav fl">
+            <ul >
+                <li v-for="type in types"><a href="#type.tno" class="phone">{{type.tname}}</a></li>
+                
+            </ul>
+        </div>
+        <div class="slide fl">
+            <ul class="slide_pics">
+                <li><a href="" class=""><img src="images/slide.jpg" alt="幻灯片"></a></li>
+                <li><a href="" class=""><img src="images/slide02.jpg" alt="幻灯片"></a></li>
+                <li><a href="" class=""><img src="images/slide03.jpg" alt="幻灯片"></a></li>
+                <li><a href="" class=""><img src="images/slide04.jpg" alt="幻灯片"></a></li>
+            </ul>
+            <div class="prev"></div>
+            <div class="next"></div>
+            <ul class="points"></ul>
+        </div>
+    </div>
+    
+<div >
+    <!-- 商品展示 -->
+    <div class="list_model" v-for="type in types">
+    	<div class="list_title clearfix">
+        	<h3 class="fl" id="type.tno">{{type.tname}}</h3>
+        	<div class="subtitle fl">
+            	<span>|</span>
+                <a v-for="good in goods" v-if="good.tno == type.tno" :href="'details.html#' + good.gno" target="_blank">{{good.gname}}</a>
+            </div>
+            <a :href="'goods.html#' + type.tno + '&' + type.tname" target="_blank" class="goods_more fr" id="fruit_more">查看更多</a>
+        </div>
+    
+    	<div class="goods_con clearfix">
+        	<div class="goods_banner fl"><img :src="type.pic"></div>
+        	
+        	<ul class="goods_list fl">
+            	<li v-for="good in goods" v-if="good.tno == type.tno">
+                	<h4><a :href="'details.html#' + good.gno + '&' + type.tname" target="_blank">{{good.gname}}</a></h4>
+                    <a :href="'details.html#' + good.gno + '&' + type.tname" target="_blank"><img :src="good.pic"></a>
+                	<div class="prize">&yen; {{good.price}}</div>
+                </li>
+        	</ul>
+        </div>
+    </div>
+</div>
+
+
+<!-- 版权所有 -->
+<div class="footer">
+    	<div class="foot_link">
+        	<a href="#">关于我们</a> <span> | </span>
+            <a href="#">联系我们</a> <span> | </span>
+            <a href="#">招聘广告</a> <span> | </span>
+            <a href="#">友情链接</a>
+        </div>
+    	<p>CopyRight &copy; 2019  All Rights Reserverd</p>
+        <p>电话：0734-8355998 湘ICP备16015987号-1</p>
+</div>
+ </div>   
+<!--  注意引入顺序 -->
+<script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui.min.js" type="text/javascript"></script>
+<script src="js/slide.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="js/axios.js" type="text/javascript"></script>
+<script src="js/qs.js" type="text/javascript"></script>
+<script src="js/checklogin.js" type="text/javascript"></script>
+<script>
+let vm = new Vue({
+	el:"#app",
+	data:{
+		goods: [],
+		types: []
+	},
+	methods: {
+		
+	},
+	mounted: function(){
+		axios.post("goods", qs.stringify({op:"findIndex"})).then(result =>{
+			if(result.data.code == 200){
+				this.types = result.data.data.types;
+				this.goods = result.data.data.goods;
+			}
+		})
+	}
+})
+
+function goods_search(){
+	var gname=$.trim($("#goods_search_gname").val());
+	$.post("goods",{op:"find",gname:gname},data=>{
+		data=parseInt($.trim(data));
+		if(data>0){
+			console.info(data.gname);
+			location.href="'deltails.html#'+data.gname";
+		}else{
+			alert("未查找到商品信息...")
+		}
+	})
+}
+
+/*let va = new Vue({
+	el:"#search",
+	data:{
+		gname:""
+	},
+	methods: {
+		
+	},
+	mounted: function(){
+		axios.post("goods", qs.stringify({op:"find",gname})).then(result =>{
+			if(result.data.code == 200){
+				this.gname=result.data.data.gname;
+				
+			}
+		})
+	}
+})*/
+
+/*function searchGoodsInfo(){
+	var gname=$.trim($("#goods_search_gname").val());
+	axios.post("goods",qs.stringify({op:"finds",gname:gname}).then =>{
+		if(result.data.code==200){
+			this.gno=result.data.data.gn0;
+			return;
+		}
+	})
+}*/
+</script>
+</body>
+</html>

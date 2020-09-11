@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>海潮商城-商品详情</title>
+<link rel="short icon" href="images/copylogo.png">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/details.css">
+</head>
+
+<body>
+<div id="login_info">
+	<!-- 头部  -->
+	<div class="header_con">
+    	<div class="header">
+    		<div class="welcome fl">欢迎来到海潮商城</div>
+    		<div class="fr">
+            	<div class="login_btn fl" v-if="onlogin">
+                	<a href="user.html" target="_blank">欢迎:<em>{{loginName}}</em></a>
+                	<span> | </span>
+                	<a href="register.html" target="_blank">注册</a>
+                </div>
+                
+                <div class="login_btn fl" v-else="onlogin">
+                	<a href="login.html" target="_blank">登录</a>
+                    <span> | </span>
+                    <a href="register.html" target="_blank">注册</a>
+                </div>
+                
+            	 <div class="user_link fl">
+                    <span> | </span>
+                    <a href="front/user.html" target="_blank">用户中心</a>
+                    <span> | </span>
+                    <a href="front/cart.html" target="_blank">我的购物车</a>
+                    <span> | </span>
+                    <a href="front/order.html" target="_blank">我的订单</a>
+                 </div>  
+             </div>  
+    	</div>
+    </div>
+    
+     <!-- 搜素框 -->
+     <div class="search_bar clearfix">
+     		<a href="index.html" class="logo fl"></a>
+     		<div class="search_con fl">
+            	<form>
+                    <input type="text" class="input_text fl" name="key_words" placeholder="搜索商品">
+                    <input type="submit" class="input_btn fr"  value="搜索">
+                </form>
+            </div>
+     		<div class="guest_cart fr">
+            	<a href="front/cart.html" class="cart_name fl">我的购物车</a>
+                <div class="goods_count fl" id="show_count">{{cartCount}}</div>
+            </div>
+     </div>
+</div>
+
+     
+    <!-- 全部商品分类 --> 
+    <div class="navbar_con">
+    	<div class="navbar clearfix">
+        	<!-- 动态下拉框 -->
+    		<div class="subnav_con fl">
+            	<h1 class="fl">全商品分类</h1>
+            	<span></span>
+                <ul class="subnav">
+                    <li><a href="#model01" class="phone">手机数码</a></li>
+	                <li><a href="#model02" class="clothing">男女服装</a></li>
+	                <li><a href="#model03" class="household">家居电器</a></li>
+	                <li><a href="#model04" class="fresh">新鲜果蔬</a></li>
+	                <li><a href="#model05" class="shoe">鞋靴箱包</a></li>
+	                <li><a href="#model06" class="jewelry">珠玉饰品</a></li>
+            	</ul>
+            </div>
+    		<ul class="navlist fl">
+    			<li><a href="index.html">首页</a></li>
+                <li class="interval">|</li>
+    		</ul>
+    	</div>
+    </div>
+     
+<!-- 面包屑导航 --> 
+<div class="breadcrumb" id="breadcrumb">
+    <a href="javascript:void(0)">全部分类</a>
+    <span>&gt;</span>
+    <a href="javascript:void(0)" id="goods_tname">{{goods.t.tname}}</a>
+    <span>&gt;</span>
+    <a href="javascript:void(0)">商品详情</a>
+</div>
+     
+<div id="app">
+    <!-- 商品展示 -->
+    <div class="goods_details_con clearfix">
+    	<div class="goods_details_pic fl" id="goods_detail_pic"><img v-for="pic in pics" :src="pic"></div>
+    	<div class="goods_details_list fr">
+        	<h3>{{goods.gname}}</h3>
+        	<p id="intro">{{goods.intro}}</p>
+        	<div class="price_bar">
+            	<span class="show_price">&yen;<em>{{goods.price}}</em>元</span>
+                <span class="show_unit">单位：<em>{{goods.weight}} </em></span>
+            </div>
+            <div class="goods_num clearfix">
+				<div class="num_name fl">数量：</div>
+				<div class="num_add fl">
+					<input type="text" class="num_show fl" v-model="nums">
+					<a href="javascript:;" class="add fr" @click="addNum(1)">+</a>
+					<a href="javascript:;" class="minus fr" @click="addNum(-1)">-</a>	
+				</div> 
+				<div class="f1">库存：<em>{{goods.balance}}{{goods.unit}}</em></div>
+			</div>
+			<div class="total">总价：<em>{{goods.price * nums}}</em>元</div>
+			<div class="operate_btn">
+				<a href="javascript:void(0);" class="buy_btn" id="buy_btn" @click="addCart()">立即购买</a>
+				<a href="javascript:void(0);" class="add_cart" id="add_cart" @click="addCart()">加入购物车</a>				
+			</div>
+        </div>
+    </div>
+    
+    <!-- 商品详情 -->
+    <div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+					<li>
+						<a href="#"><img src="images/goods/goods001.jpg"></a>
+						<h4><a href="#">进口柠檬</a></h4>
+						<div class="prize">￥3.90</div>
+					</li>
+					<li>
+						<a href="#"><img src="images/goods/goods002.jpg"></a>
+						<h4><a href="#">玫瑰香葡萄</a></h4>
+						<div class="prize">￥16.80</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<ul class="detail_tab clearfix">
+				<li class="active">商品介绍</li>
+				<li>评论</li>
+                <li>推荐</li>
+			</ul>
+
+			<div class="tab_content">
+				<dl>
+					<dt>商品详情：</dt>
+					<dd>{{goods.descr}}</dd>
+				</dl>
+			</div>
+
+		</div>
+	</div>
+</div>
+    <!-- 版权所有 -->
+    <div class="footer">
+    	<div class="foot_link">
+        	<a href="#">关于我们</a> <span> | </span>
+            <a href="#">联系我们</a> <span> | </span>
+            <a href="#">招聘广告</a> <span> | </span>
+            <a href="#">友情链接</a>
+        </div>
+    	<p>CopyRight &copy; 2019 All Rights Reserverd</p>
+        <p>电话：0734-8355998 湘ICP备16015987号</p>
+</div>
+ 
+<script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui.min.js" type="text/javascript"></script>
+<script src="js/slide.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="js/axios.js" type="text/javascript"></script>
+<script src="js/qs.js" type="text/javascript"></script>
+<script src="js/checklogin.js" type="text/javascript"></script>
+<script>
+let vm = new Vue({
+	el: "#app",
+	data: {
+		goods: {},
+		nums: 1,
+		pics: []
+	},
+	methods: {
+		addNum: function(num){
+			if(num == -1 && this.nums == 1){
+				return;
+			}
+			
+			if(num == 1 && this.nums >= this.goods.balance){
+				return;
+			}
+			
+			this.nums = parseInt(this.nums) + num;
+		},
+		addCart: function(){
+			if(!login.$data.loginId){
+				alert("请先登陆...");
+				location.href="login.html";
+				return;
+			}
+			
+			let lcarts = login.$data.carts;
+			if(lcarts.length > 0){
+				for(let i = 0, len = lcarts.length; i < len; i ++){
+					if(lcarts[i].gno == this.goods.gno){
+						axios.post("cart",qs.stringify({op:"update", gno: this.goods.gno, num: this.nums, cno:lcarts[i].cno})).then(result =>{
+							if(result.data.code == 200){
+								alert("加入购物车成功...");
+							}else{
+								alert("加入购物车失败...");
+							}
+						})
+						return;
+					}
+				}
+			}
+			axios.post("cart", qs.stringify({op:"add", gno: this.goods.gno, num: this.nums, mno:login.$data.loginId})).then(result =>{
+				if(result.data.code == 200){
+					login.$data.cartCount = login.$data.cartCount + 1;
+					
+					let newObj = {};
+					newObj.cno = result.data.msg;
+					newObj.gno = this.goods.gno;
+					login.$data.carts.push(newObj);
+				}else{
+					alert("加入购物车失败...");
+				}
+			})
+		}
+	},
+	mounted: function(){
+		axios.all([getGoodsByGno()]).then(axios.spread((result) =>{
+			this.goods = result.data.data;
+			this.pics = result.data.data.pics.split(";");
+			this.intro=result.data.data.intro;
+			console.info(this.intro);
+			this.$nextTick(function(){
+				showPics();
+			})
+		}));
+	}
+})
+
+function getGoodsByGno(){
+	var hash = decodeURI(location.hash);
+	if(hash == "" || hash.indexOf("&") <= 0){
+		location.href="index.html";
+		return;
+	}
+	
+	hash = hash.replace("#", "").split("&");
+	$("#goods_tname").text(hash[1]);
+	
+	return axios.post("goods", qs.stringify({op:"findByGno", gno:hash[0]}));
+	
+}
+
+function showPics(){
+	var imglen = $("#goods_details_pic>img").length;
+	if(imglen > 1){
+		var i =0;
+		
+		setInterval(() =>{
+			$("#goods_details_pic>img").css("display", "none");
+			$("#goods_details_pic>img").eq(i).css("display", "block");
+			i = (i + 1) % imglen;
+		}, 2000);
+	}
+}
+
+$("#buy_btn").click(function(){
+	location.href = "order.html";
+});
+
+$(function(){
+	console.info($("#intro").html());
+    let html=$("#intro").html();
+    var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'}; 
+    html=html.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
+    html = html.replace(/(\n)/g, "");  
+    html = html.replace(/(\t)/g, "");  
+    html = html.replace(/(\r)/g, "");  
+    html = html.replace(/<\/?[^>]*>/g, "");  
+    html = html.replace(/\s*/g, "");
+    console.info(html);
+    $("#intro").html(html);
+})
+
+</script>
+</body>
+</html>
